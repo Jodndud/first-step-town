@@ -10,9 +10,9 @@ export default function App() {
       <Routes>
         <Route path="/" element={<Home />} />
         <Route path="/game">
-          <Route path="stock" element={<Stock />} />
-          <Route path="styping" element={<Typing />} />
+          <Route path="typing" element={<Typing />} />
           <Route path="calculating" element={<Calculating />} />
+          <Route path="stock" element={<Stock />} />
         </Route>
       </Routes>
     </BrowserRouter>

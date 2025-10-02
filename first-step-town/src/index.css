@@ -9,17 +9,12 @@
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
-
 a {
   font-weight: 600;
-  color: #2563eb;
+  color: #000;
   text-decoration: none;
 }
-
-a:hover {
-  color: #1d4ed8;
-}
-
+ul,li{list-style: none;}
 button {
   font-family: inherit;
 }
