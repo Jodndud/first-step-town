@@ -26,9 +26,9 @@
       </div>
       <hr />
       <h3>영상 포트폴리오 🔗</h3>
-      <video width="80%" controls>
-          <source src="./assets/first-step-town-info.mp4" type="video/mp4" />
-      </video>
+      <a href="https://youtu.be/sPQDfO4vVGY" target="_blank">
+        <img src="./assets/video-portfoilo-thumbnail.png" width="80%" />
+      </a>
     </div>
     <br><br><br><hr/>
     <h2 align="left">🔎 목차</h2>
