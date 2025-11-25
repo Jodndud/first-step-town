@@ -5,7 +5,7 @@
       <h1 align="center">첫걸음 타운</h1>
       <h4 align="center">메타버스 환경의 청소년 금융지식 향상 플랫폼</h4><br>
       <a href="https://zep.us/play/R5orpr" target="_blank">
-        <img src="./assets/project-banner.png" width="50%" />
+        <img src="./assets/project-banner.png" width="30%" />
       </a>
       <br /><br />
       <div style="width: 550px">
@@ -28,17 +28,13 @@
       <h3>영상 포트폴리오 🔗</h3>
       <video width="80%" controls>
           <source src="./assets/first-step-town-info.mp4" type="video/mp4" />
-    </video>
+      </video>
     </div>
     <br><br><br><hr/>
     <h2 align="left">🔎 목차</h2>
     <div align="left">
       <h4><a href="#developers">✨ 팀 구성</a></h4>
-      <!-- <h4><a href="#techStack">🛠️ 기술 스택</a></h4> -->
-      <!-- <h4><a href="#ciCd">🖧 CI/CD</a></h4> -->
       <h4><a href="#keyFeatures">🌠 주요 기능</a></h4>
-      <!-- <h4><a href="#directories">📂 디렉터리 구조</a></h4>
-      <h4><a href="#projectDeliverables">📦 프로젝트 산출물</a></h4> -->
     </div>
     <br><br><hr/>
     <h2 align="left"><a name="developers">✨ 팀 구성</a></h2>
