@@ -119,22 +119,22 @@
     <table>
       <tbody align="center">
         <tr>
+          <th style="text-align: center"> 메타버스 맵 </th>
           <th style="text-align: center"> 직업선택 </th>
-          <th style="text-align: center"> 직업별 게임 </th>
         </tr>
         <tr>
-          <td width="50%"><img width="100%" src="./readme-assets/feature/1_main.gif" /></td>
-          <td width="50%"><img width="100%" src="./readme-assets/feature/2_signup.gif" /></td>
+          <td width="50%"><img width="100%" src="./assets/map.png" /></td>
+          <td width="50%"><img width="100%" src="./assets/select_job.png" /></td>
         </tr>
       </tbody>
       <tbody align="center">
         <tr>
-          <th style="text-align: center"> 메타마스크 지갑 연동 </th>
-          <th style="text-align: center"> 경매 정보 조회 </th>
+          <th style="text-align: center"> 게임 모달 </th>
+          <th style="text-align: center"> 게임화면 </th>
         </tr>
         <tr>
-          <td width="50%"><img width="100%" src="./readme-assets/feature/3_wallet.gif" /></td>
-          <td width="50%"><img width="100%" src="./readme-assets/feature/4_auction.gif" /></td>
+          <td width="50%"><img width="100%" src="./assets/game_modal.png" /></td>
+          <td width="50%"><img width="100%" src="./assets/game.png" /></td>
         </tr>
       </tbody>
     </table>
