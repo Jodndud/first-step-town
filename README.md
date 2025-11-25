@@ -27,7 +27,7 @@
       <hr />
       <h3>영상 포트폴리오 🔗</h3>
       <a href="https://youtu.be/sPQDfO4vVGY" target="_blank">
-        <img src="./assets/video-portfoilo-thumbnail.png" width="80%" />
+        <img src="./assets/video-thumbnail.png" width="80%" />
       </a>
     </div>
     <br><br><br><hr/>
