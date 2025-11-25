@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="ko">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>프로필</title>
+    <style>
+      :root { color-scheme: light; --panel-bg:#fff; --border-color:#e2e8f0; --text-main:#1f2937; --text-sub:#64748b; }
+      html,body{height:100%;margin:0;overflow:hidden}
+      body{font-family:"Pretendard","Noto Sans KR",Arial,sans-serif;background:transparent;color:var(--text-main);display:flex;align-items:center;justify-content:center;padding:8px}
+      .panel{width:100%;max-width:260px;background:var(--panel-bg);border:1px solid var(--border-color);border-radius:12px;box-shadow:0 8px 16px rgba(15,23,42,.12);padding:12px 14px;display:flex;flex-direction:column;gap:8px}
+      .status{font-size:12px;color:#2563eb;background:rgba(37,99,235,.1);border:1px solid rgba(37,99,235,.2);border-radius:8px;padding:6px 8px}
+      .status.error{color:#dc2626;background:rgba(220,38,38,.1);border-color:rgba(220,38,38,.2)}
+      .list{display:flex;flex-direction:column;gap:6px}
+      .item{display:flex;justify-content:space-between;align-items:center;font-size:13px;border-bottom:1px solid #f1f5f9;padding:6px 0}
+      .item:last-child{border-bottom:none}
+      .label{color:var(--text-sub);font-weight:600}
+      .value{font-weight:600;color:var(--text-main);max-width:130px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;text-align:right}
+    </style>
+  </head>
+  <body>
+    <div class="panel">
+      <div class="status" id="status">데이터를 불러오는 중입니다...</div>
+      <div class="list" id="profile" hidden>
+        <div class="item"><span class="label">닉네임</span><span class="value" id="nickname">-</span></div>
+        <div class="item"><span class="label">직업</span><span class="value" id="job">-</span></div>
+        <div class="item"><span class="label">보유 골드</span><span class="value" id="gold">0</span></div>
+      </div>
+    </div>
+    <script>
+      var statusEl=document.getElementById('status');
+      var profileWrap=document.getElementById('profile');
+      function setStatus(message,isError){statusEl.textContent=message;if(isError)statusEl.classList.add('error');else statusEl.classList.remove('error');statusEl.hidden=false}
+      function parsePayload(d){if(!d)return{};if(typeof d==='string'){try{return JSON.parse(d)}catch(e){setStatus('메시지를 파싱하지 못했습니다.',true);return{type:'error'}}}return d}
+      function parseProfile(d){if(!d)return null;if(typeof d==='string'){try{return JSON.parse(d)}catch(e){setStatus('프로필 데이터를 파싱하지 못했습니다.',true);return null}}return d}
+      function renderProfile(p){if(!p||typeof p!=='object'){setStatus('프로필을 표시할 수 없습니다.',true);profileWrap.hidden=true;return}document.getElementById('nickname').textContent=p.nickname||'-';document.getElementById('job').textContent=p.job||'-';var g=p.goldBalance!=null?p.goldBalance:(p.gold!=null?p.gold:0);document.getElementById('gold').textContent=Number(g).toLocaleString();statusEl.hidden=true;profileWrap.hidden=false}
+      window.addEventListener('message',function(event){var payload=parsePayload(event.data);switch(payload.type){case 'loading':setStatus(payload.message||'데이터를 불러오는 중입니다...',false);profileWrap.hidden=true;break;case 'error':setStatus(payload.message||'프로필을 표시할 수 없습니다.',true);profileWrap.hidden=true;break;case 'profile':renderProfile(parseProfile(payload.payload));break;default:setStatus('알 수 없는 메시지입니다.',true);profileWrap.hidden=true}});
+    </script>
+  </body>
+  </html>
+

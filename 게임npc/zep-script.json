@@ -1,0 +1,23 @@
+{
+  "appId": "od9GJL",
+  "name": "game",
+  "description": "game 진행",
+  "type": "normal",
+  "config": {
+    "npcKey": "npc_career_portal",
+    "profileWidget": {
+      "path": "profile.html",
+      "align": "topleft",
+      "width": 260,
+      "height": 172
+    },
+    "startWidget": {
+      "path": "start-modal.html",
+      "align": "middle",
+      "width": 640,
+      "height": 420
+    },
+    "baseWebUrl": "http://3.27.73.25/game",
+    "apiBaseUrl": "http://3.27.73.25/api"
+  }
+}

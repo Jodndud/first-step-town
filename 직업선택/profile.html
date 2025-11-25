@@ -1,0 +1,93 @@
+﻿<!DOCTYPE html>
+<html lang="ko">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>프로필</title>
+    <style>
+      :root {
+        color-scheme: light;
+        --panel-bg: #ffffff;
+        --border-color: #e2e8f0;
+        --text-main: #1f2937;
+        --text-sub: #64748b;
+      }
+      html, body { height: 100%; margin: 0; overflow: hidden }
+      body {
+        font-family: "Pretendard", "Noto Sans KR", Arial, sans-serif;
+        background: transparent; color: var(--text-main);
+        display: flex; align-items: stretch; justify-content: stretch;
+      }
+      .panel { width: 100%; background: var(--panel-bg); border: 1px solid var(--border-color);
+        border-radius: 12px; padding: 12px 14px; display: flex; flex-direction: column; gap: 8px; box-shadow: none; }
+      .status { font-size: 12px; color: #2563eb; background: rgba(37,99,235,.08); padding: 6px 8px; border-radius: 8px; border: 1px solid rgba(37,99,235,.18); }
+      .status.error { color:#dc2626; background:rgba(220,38,38,.08); border-color:rgba(220,38,38,.18) }
+      .list { display: flex; flex-direction: column; gap: 6px }
+      .item { display:flex; justify-content:space-between; align-items:center; font-size:13px; border-bottom:1px solid #f1f5f9; padding:6px 0 }
+      .item:last-child { border-bottom: none }
+      .label { color: var(--text-sub); font-weight: 600 }
+      .value { font-weight: 600; color: var(--text-main); max-width: 130px; text-align:right; overflow:hidden; text-overflow:ellipsis; white-space:nowrap }
+    </style>
+  </head>
+  <body>
+    <div class="panel">
+      <div class="status" id="status" hidden>데이터를 불러오는 중입니다...</div>
+      <div class="list" id="profile" hidden>
+        <div class="item"><span class="label">닉네임</span><span class="value" id="nickname">-</span></div>
+        <div class="item"><span class="label">직업</span><span class="value" id="job">-</span></div>
+        <div class="item"><span class="label">보유 골드</span><span class="value" id="gold">0</span></div>
+      </div>
+    </div>
+
+    <script>
+      var statusEl = document.getElementById('status');
+      var profileWrap = document.getElementById('profile');
+
+      function setStatus(message, isError) {
+        statusEl.textContent = message || '';
+        if (isError) statusEl.classList.add('error'); else statusEl.classList.remove('error');
+        statusEl.hidden = !message;
+      }
+
+      function parsePayload(data) {
+        if (!data) return {};
+        if (typeof data === 'string') { try { return JSON.parse(data); } catch (e) { return { type:'error', message:'메시지를 파싱하지 못했습니다.' }; } }
+        return data;
+      }
+
+      function parseProfile(data) {
+        if (!data) return null;
+        if (typeof data === 'string') { try { return JSON.parse(data); } catch (e) { return null; } }
+        return data;
+      }
+
+      function renderProfile(p) {
+        if (!p || typeof p !== 'object') { setStatus('프로필을 표시할 수 없습니다.', true); profileWrap.hidden = true; return; }
+        document.getElementById('nickname').textContent = p.nickname || '-';
+        document.getElementById('job').textContent = p.job || '-';
+        var g = p.goldBalance != null ? p.goldBalance : (p.gold != null ? p.gold : 0);
+        document.getElementById('gold').textContent = Number(g).toLocaleString();
+        setStatus('', false); profileWrap.hidden = false;
+      }
+
+      window.addEventListener('message', function (event) {
+        var payload = parsePayload(event.data);
+        switch (payload.type) {
+          case 'loading':
+            // 로딩 메시지는 표시하지 않습니다.
+            break;
+          case 'error':
+            setStatus(payload.message || '프로필을 표시할 수 없습니다.', true);
+            profileWrap.hidden = true;
+            break;
+          case 'profile':
+            renderProfile(parseProfile(payload.profile));
+            break;
+          default:
+            // 알 수 없는 메시지 무시
+            break;
+        }
+      });
+    </script>
+  </body>
+</html>

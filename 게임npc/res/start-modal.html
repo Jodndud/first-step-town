@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="ko">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>게임 시작</title>
+    <style>
+      :root {
+        color-scheme: light;
+        --bg: rgba(15, 23, 42, 0.92);
+        --panel: #ffffff;
+        --border: rgba(148, 163, 184, 0.4);
+        --text-main: #1f2937;
+        --text-sub: #64748b;
+        --accent: #2563eb;
+        --accent-dark: #1d4ed8;
+      }
+      * { box-sizing: border-box; }
+      html, body { height: 100%; margin: 0; overflow: hidden; }
+      body {
+        font-family: "Pretendard", "Noto Sans KR", "Segoe UI", sans-serif;
+        background: var(--bg);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        padding: 32px;
+        color: var(--text-main);
+      }
+      .modal {
+        width: 100%;
+        max-width: 560px;
+        background: var(--panel);
+        border-radius: 24px;
+        padding: 36px 40px;
+        border: 1px solid var(--border);
+        box-shadow: 0 24px 48px rgba(15, 23, 42, 0.2);
+        display: flex;
+        flex-direction: column;
+        gap: 24px;
+      }
+      header { display: flex; flex-direction: column; gap: 8px; text-align: center; }
+      header h1 { font-size: 26px; font-weight: 700; margin: 0; }
+      header p { margin: 0; color: var(--text-sub); font-size: 15px; }
+      .steps { background: rgba(241, 245, 249, 0.85); border-radius: 18px; padding: 20px 22px; display: flex; flex-direction: column; gap: 14px; }
+      .step { display: flex; gap: 12px; align-items: flex-start; }
+      .step-index { width: 28px; height: 28px; border-radius: 50%; background: linear-gradient(135deg, var(--accent), var(--accent-dark)); color: #fff; display: flex; align-items: center; justify-content: center; font-weight: 600; font-size: 14px; flex-shrink: 0; }
+      .step-text { font-size: 14px; color: var(--text-main); line-height: 1.5; }
+      footer { display: flex; gap: 12px; justify-content: center; }
+      button { border: none; border-radius: 12px; padding: 13px 18px; font-size: 15px; font-weight: 600; cursor: pointer; min-width: 140px; transition: transform .15s ease, filter .15s ease; }
+      #start-btn { background: linear-gradient(135deg, var(--accent), var(--accent-dark)); color: #fff; }
+      #start-btn:hover { filter: brightness(1.05); }
+      #start-btn:active { transform: translateY(1px); }
+      #close-btn { background: rgba(148, 163, 184, 0.15); color: var(--text-main); }
+    </style>
+  </head>
+  <body>
+    <div class="modal">
+      <header>
+        <h1 id="title">미션 시작</h1>
+        <p id="summary">튜토리얼을 간단히 확인하고 시작해 보세요.</p>
+      </header>
+      <section class="steps" id="steps"></section>
+      <footer>
+        <button type="button" id="close-btn">닫기</button>
+        <button type="button" id="start-btn">게임 시작</button>
+      </footer>
+    </div>
+
+    <script>
+      var stepsEl = document.getElementById('steps');
+      var titleEl = document.getElementById('title');
+      var summaryEl = document.getElementById('summary');
+      var startBtn = document.getElementById('start-btn');
+      var closeBtn = document.getElementById('close-btn');
+      var currentJob = '';
+
+      function renderSteps(list) {
+        stepsEl.innerHTML = '';
+        if (!Array.isArray(list) || list.length === 0) {
+          var empty = document.createElement('p');
+          empty.className = 'step-text';
+          empty.textContent = '튜토리얼 정보가 준비되지 않았습니다.';
+          stepsEl.appendChild(empty);
+          return;
+        }
+        list.forEach(function (text, index) {
+          var item = document.createElement('div');
+          item.className = 'step';
+          var badge = document.createElement('div');
+          badge.className = 'step-index';
+          badge.textContent = String(index + 1);
+          var content = document.createElement('div');
+          content.className = 'step-text';
+          content.textContent = text;
+          item.appendChild(badge);
+          item.appendChild(content);
+          stepsEl.appendChild(item);
+        });
+      }
+
+      window.addEventListener('message', function (event) {
+        var data = event.data;
+        if (!data || data.type !== 'init' || !data.payload) return;
+        var payload = data.payload;
+        currentJob = payload.job || '';
+        titleEl.textContent = payload.displayName || '미션 시작';
+        summaryEl.textContent = payload.summary || '준비가 되었다면 게임을 시작하세요.';
+        startBtn.textContent = payload.startLabel || '게임 시작';
+        renderSteps(Array.isArray(payload.steps) ? payload.steps : []);
+      });
+
+      startBtn.addEventListener('click', function () {
+        window.parent.postMessage({ type: 'start', job: currentJob }, '*');
+      });
+
+      closeBtn.addEventListener('click', function () {
+        window.parent.postMessage({ type: 'close' }, '*');
+      });
+    </script>
+  </body>
+</html>

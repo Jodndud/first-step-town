@@ -1,0 +1,16 @@
+{
+  "appId": "REPLACE_WITH_APP_ID",
+  "name": "profile-only",
+  "description": "프로필 위젯만 표시",
+  "type": "normal",
+  "config": {
+    "apiBaseUrl": "http://3.27.73.25/api",
+    "profileWidget": {
+      "path": "profile.html",
+      "align": "topleft",
+      "width": 260,
+      "height": 172
+    }
+  }
+}
+

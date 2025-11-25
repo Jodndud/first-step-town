@@ -1,0 +1,26 @@
+﻿{
+  "appId": "od9GJL",
+  "name": "job-selection",
+  "description": "직업 선택 스크립트",
+  "type": "normal",
+  "config": {
+    "apiBaseUrl": "http://3.27.73.25/api",
+    "endpoints": {
+      "session": "/auth/zep-session",
+      "job": "/users/job",
+      "profile": "/users"
+    },
+    "profileWidget": {
+      "path": "profile.html",
+      "align": "topleft",
+      "width": 280,
+      "height": 240
+    },
+    "jobWidget": {
+      "path": "widget.html",
+      "align": "middle",
+      "width": 790,
+      "height": 650
+    }
+  }
+}
